@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Apply Leave</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #f4f6f9;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      height: 60px;
+      background: #1f2937;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      background: #2563eb;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .profile-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+    }
+
+    .logout-btn {
+      background: #dc2626;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .logout-btn:hover {
+      background: #b91c1c;
+    }
+
+    /* ===== FORM ===== */
+    .container {
+      max-width: 550px;
+      background: white;
+      margin: 40px auto;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #1f2937;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    textarea {
+      resize: none;
+      height: 80px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      background: #1d4ed8;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 12px;
+      text-decoration: none;
+      color: #2563eb;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<div class="navbar">
+  <div class="nav-left">
+    <div class="logo">E</div>
+    <span th:text="${employee.fullname}">Employee Name</span>
+  </div>
+
+  <div class="nav-right">
+    <form action="/logout" method="post">
+      <button class="logout-btn">Logout</button>
+    </form>
+  </div>
+</div>
+
+<!-- ===== LEAVE FORM ===== -->
+<div class="container">
+  <h2>Apply for Leave</h2>
+
+  <form action="/take-leave" method="post">
+
+    <!-- Hidden Employee ID -->
+    <input type="hidden" name="employeeId" th:value="${employee.id}">
+
+    <!-- Leave Type -->
+    <div class="form-group">
+      <label>Leave Type</label>
+      <select name="leaveType" required>
+        <option value="">-- Select Leave Type --</option>
+        <option>Casual Leave</option>
+        <option>Sick Leave</option>
+        <option>Paid Leave</option>
+        <option>Emergency Leave</option>
+      </select>
+    </div>
+
+    <!-- From Date -->
+    <div class="form-group">
+      <label>From Date</label>
+      <input type="date" name="from_date" required>
+    </div>
+
+    <!-- To Date -->
+    <div class="form-group">
+      <label>To Date</label>
+      <input type="date" name="to_date" required>
+    </div>
+
+    <!-- Reason -->
+    <div class="form-group">
+      <label>Reason</label>
+      <textarea name="reason" placeholder="Enter reason for leave" required></textarea>
+    </div>
+
+    <!-- Submit -->
+    <button type="submit" class="btn">Submit Leave Application</button>
+
+  </form>
+
+  <a href="/employee-dashboard" class="back-link">← Back to Dashboard</a>
+</div>
+
+</body>
+</html>

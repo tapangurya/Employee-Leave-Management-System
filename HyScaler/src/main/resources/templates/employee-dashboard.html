@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Employee Dashboard</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #f4f6f9;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      height: 60px;
+      background: #1f2937;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      background: #2563eb;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .profile-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid white;
+    }
+
+    .logout-btn {
+      background: #dc2626;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .logout-btn:hover {
+      background: #b91c1c;
+    }
+
+    /* ===== MAIN ===== */
+    .container {
+      padding: 25px;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .action-buttons a {
+      text-decoration: none;
+    }
+
+    .btn {
+      padding: 12px 18px;
+      background: #2563eb;
+      color: white;
+      border-radius: 5px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #1d4ed8;
+    }
+
+    /* ===== TABLE ===== */
+    .table-container {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background: #f3f4f6;
+      font-weight: bold;
+    }
+
+    .status-pending {
+      color: orange;
+      font-weight: bold;
+    }
+
+    .status-approved {
+      color: green;
+      font-weight: bold;
+    }
+
+    .status-rejected {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<div class="navbar">
+  <div class="nav-left">
+    <div class="logo">E</div>
+    <span th:text="${employee.fullname}">Employee Name</span>
+  </div>
+
+  <div class="nav-right">
+    
+    <form action="/logout" method="post">
+      <button class="logout-btn">Logout</button>
+    </form>
+  </div>
+</div>
+
+<!-- ===== MAIN CONTENT ===== -->
+<div class="container">
+
+  <!-- Action Buttons -->
+  <div class="action-buttons">
+    <a href="/take-leave"><button class="btn">Take Leave</button></a>
+    <a href="/correction-apply"><button class="btn">Correction Apply</button></a>
+    <a href="/resign"><button class="btn">Resign</button></a>
+  </div>
+
+  <!-- Applications Table -->
+  <div class="table-container">
+    <h3>All Applications</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Application ID</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Approved / Not</th>
+        </tr>
+      </thead>
+
+	 <tbody>
+	  <tr th:each="app : ${applications}">
+	    <td th:text="${app.id}">101</td>
+	
+	    <td th:text="${app.leaveType}">Leave</td>
+	
+	    <td th:text="${app.status}"
+	        th:classappend="${app.status=='PENDING'} ? 'status-pending' :
+	                        (${app.status=='APPROVED'} ? 'status-approved' : 'status-rejected')">
+	      Pending
+	    </td>
+	
+	    <!-- Approved or Not (derived from status) -->
+	    <td th:text="${app.status=='APPROVED' ? 'Yes' : 'No'}">No</td>
+	  </tr>
+	
+	  <tr th:if="${applications == null || #lists.isEmpty(applications)}">
+	    <td colspan="4">No applications found</td>
+	  </tr>
+	</tbody>
+
+    </table> 
+
+  </div>
+
+</div>
+
+</body>
+</html>

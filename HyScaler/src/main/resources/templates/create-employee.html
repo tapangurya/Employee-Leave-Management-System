@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Employee</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      padding: 30px;
+    }
+
+    .form-container {
+      max-width: 600px;
+      background: #fff;
+      padding: 25px;
+      margin: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #1f2937;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    .gender-group {
+      display: flex;
+      gap: 15px;
+    }
+
+    .gender-group label {
+      font-weight: normal;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      background: #1d4ed8;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="form-container">
+  <h2>Create Employee</h2>
+
+  <form action="/employee/save" method="post">
+    <!-- Full Name -->
+    <div class="form-group">
+      <label>Full Name</label>
+      <input type="text" name="fullname" required>
+    </div>
+
+    <!-- Phone -->
+    <div class="form-group">
+      <label>Phone Number</label>
+      <input type="tel" name="phone" pattern="[0-9]{10}" required>
+    </div>
+
+    <!-- Date of Birth -->
+    <div class="form-group">
+      <label>Date of Birth</label>
+      <input type="date" name="dob" required>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" name="email" required>
+    </div>
+
+    <!-- PAN Number -->
+    <div class="form-group">
+      <label>PAN Number</label>
+      <input type="text" name="panNumber" maxlength="10" required>
+    </div>
+
+    <!-- Aadhaar Number -->
+    <div class="form-group">
+      <label>Aadhaar Number</label>
+      <input type="text" name="aadhaarNumber" pattern="[0-9]{12}" required>
+    </div>
+
+    <!-- Designation Dropdown -->
+    <div class="form-group">
+      <label>Designation</label>
+      <select name="designation" required>
+        <option value="">-- Select Designation --</option>
+        <option>Software Engineer</option>
+        <option>Senior Developer</option>
+        <option>HR Executive</option>
+        <option>Team Lead</option>
+        <option>Project Manager</option>
+        <option>QA Engineer</option>
+        <option>DevOps Engineer</option>
+        <option>UI/UX Designer</option>
+        <option>Business Analyst</option>
+        <option>System Administrator</option>
+      </select>
+    </div>
+
+    <!-- Gender -->
+    <div class="form-group">
+      <label>Gender</label>
+      <div class="gender-group">
+        <label><input type="radio" name="gender" value="Male" required> Male</label>
+        <label><input type="radio" name="gender" value="Female"> Female</label>
+        <label><input type="radio" name="gender" value="Other"> Other</label>
+      </div>
+    </div>
+
+    <!-- Password -->
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" name="password" required>
+    </div>
+
+    <!-- Submit -->
+    <button type="submit" class="btn">Create Employee</button>
+
+  </form>
+</div>
+
+</body>
+</html>

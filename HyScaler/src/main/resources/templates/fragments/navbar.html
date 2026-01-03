@@ -1,0 +1,87 @@
+<header class="navbar" th:fragment="navbar">
+
+  <div class="logo-area">
+    <a href="/">
+      <img src="/images/logo.png" alt="Logo" class="logo">
+    </a>
+    <span class="company-name">HyScaler</span>
+  </div>
+
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/about">About</a></li>
+    <li><a href="/contact">Contact</a></li>
+
+    <li class="dropdown">
+      <a href="#">Login</a>
+      <div class="dropdown-menu">
+        <a href="/employee-login">Employee Login</a>
+        <a href="/manager-login">Manager Login</a>
+      </div>
+    </li>
+
+    <li class="dropdown">
+      <a href="#">Sign Up</a>
+      <div class="dropdown-menu">
+        <a href="/employee-signup">Employee Sign Up</a>
+        <a href="/manager-signup">Manager Sign Up</a>
+      </div>
+    </li>
+  </ul>
+
+</header>
+	
+
+
+<!-- <section id="header" th:fragment="navbar">
+  <header class="navbar">
+
+    Logo
+    <div class="logo-area">
+      <img src="/images/Logo/logo3.png" alt="logo" class="logo">
+      <span class="company-name">StyleTradeMark</span>
+    </div>
+
+    Menu
+    <ul class="nav-links">
+
+      <li><a href="/">Home</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
+
+      Login & Signup (Not Logged In)
+      <li class="dropdown" th:if="${session.customer == null}">
+        <a href="#">Login</a>
+        <div class="dropdown-menu">
+          <a href="/customer-login">Customer Login</a>
+          <a href="/seller-login">Seller Login</a>
+        </div>
+      </li>
+
+      <li class="dropdown" th:if="${session.customer == null}">
+        <a href="#">Sign Up</a>
+        <div class="dropdown-menu">
+          <a href="/customer-signup">Customer Sign Up</a>
+          <a href="/seller-signup">Seller Sign Up</a>
+        </div>
+      </li>
+
+      Profile & Logout (Logged In)
+      <li class="dropdown" th:if="${session.customer != null}">
+        <a href="#">
+          <i class="fa fa-user"></i>
+          <span th:text="${session.customer.name}">Profile</span>
+        </a>
+        <div class="dropdown-menu">
+          <a th:href="'/customer-profile/' + ${session.customer.id}">
+            My Profile
+          </a>
+          <a href="/logout">Logout</a>
+        </div>
+      </li>
+
+    </ul>
+  </header>
+</section>
+
+ -->
