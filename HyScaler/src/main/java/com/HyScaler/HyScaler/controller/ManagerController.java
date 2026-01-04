@@ -18,8 +18,6 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class ManagerController {
 	@Autowired ManagerService service;
-	
-	
 	@GetMapping("/manager-dashboard")
 	public String getManagerDashBoard(HttpSession session,ModelMap map) {
 		return service.getManagerDashboard(session,map);
@@ -32,22 +30,29 @@ public class ManagerController {
 	public String saveEmp(@ModelAttribute Employee employee,HttpSession session,ModelMap map) {
 		return service.saveEmployee(employee,session,map);
 	}
-//	@GetMapping("/delete/{id}")
-//	public String deleteProduct(@PathVariable int id, HttpSession session) {
-//		return service.deleteProduct(id, session);
-//	}
 
 	@GetMapping("/edit-employee/{id}")
 	public String editEmployee(@PathVariable int id, HttpSession session, ModelMap map) {
 		return service.editEmployee(id, session, map);
 	}
-
+	
 	@PostMapping("/edit-employee")
 	public String editEmployee(@ModelAttribute Employee employee,HttpSession session)throws IOException {
 		return service.editEmployee(employee, session);
 	}
+	
 	@GetMapping("/delete-employee/{id}")
 	public String deleteEmployee(@PathVariable int id, HttpSession session) {
 		return service.deleteEmployee(id, session);
+	}
+	
+	@GetMapping("/application-reject/{id}")
+	public String  applicationReject(@PathVariable int id,HttpSession session,ModelMap map) {
+		return service.applicationReject(id,session,map);
+	}
+	
+	@GetMapping("/application-approve/{id}")
+	public String  applicationApproved(@PathVariable int id,HttpSession session,ModelMap map) {
+		return service.applicationApproved(id,session,map);
 	}
 }

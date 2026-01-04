@@ -56,3 +56,20 @@ button {
 button:hover {
     background-color: #218838;
 }
+
+/* Back Link */
+.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 25px;
+    text-decoration: none;
+    color: #94a3b8;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.back-link:hover {
+    color: #6366f1;
+    text-decoration: none;
+}

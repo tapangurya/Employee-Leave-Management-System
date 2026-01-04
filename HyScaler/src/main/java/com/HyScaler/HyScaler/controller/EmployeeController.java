@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.HyScaler.HyScaler.dto.Application;
+import com.HyScaler.HyScaler.dto.Employee;
 import com.HyScaler.HyScaler.service.EmployeeService;
 
 import jakarta.servlet.http.HttpSession;
@@ -43,6 +44,17 @@ public class EmployeeController {
 	public String postTakeLeave(@ModelAttribute Application application,HttpSession session,ModelMap map ) {
 		return service.postTakeLeave(application,session,map);
 	}
+	@GetMapping("/employee-edit")
+	public String editBasicDetails(HttpSession session,ModelMap map) {
+		return service.editBasicDetails(session,map);
+	}
+
+	
+	@PostMapping("/employee-edit")
+	public String postEditBasicDetails(@ModelAttribute Employee employee, HttpSession session,ModelMap map) {
+		return service.postEditBasicDetails(employee,session,map);
+	}
+	
 	
 	
   

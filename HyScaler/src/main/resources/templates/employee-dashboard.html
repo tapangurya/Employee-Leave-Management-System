@@ -3,212 +3,115 @@
 <head>
   <meta charset="UTF-8">
   <title>Employee Dashboard</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-
-    body {
-      margin: 0;
-      background: #f4f6f9;
-    }
-
-    /* ===== NAVBAR ===== */
-    .navbar {
-      height: 60px;
-      background: #1f2937;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 20px;
-    }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-    .logo {
-      width: 40px;
-      height: 40px;
-      background: #2563eb;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-    }
-
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .profile-img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid white;
-    }
-
-    .logout-btn {
-      background: #dc2626;
-      color: white;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .logout-btn:hover {
-      background: #b91c1c;
-    }
-
-    /* ===== MAIN ===== */
-    .container {
-      padding: 25px;
-    }
-
-    .action-buttons {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-
-    .action-buttons a {
-      text-decoration: none;
-    }
-
-    .btn {
-      padding: 12px 18px;
-      background: #2563eb;
-      color: white;
-      border-radius: 5px;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-    }
-
-    .btn:hover {
-      background: #1d4ed8;
-    }
-
-    /* ===== TABLE ===== */
-    .table-container {
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th, td {
-      padding: 12px;
-      text-align: center;
-      border-bottom: 1px solid #ddd;
-    }
-
-    th {
-      background: #f3f4f6;
-      font-weight: bold;
-    }
-
-    .status-pending {
-      color: orange;
-      font-weight: bold;
-    }
-
-    .status-approved {
-      color: green;
-      font-weight: bold;
-    }
-
-    .status-rejected {
-      color: red;
-      font-weight: bold;
-    }
-  </style>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/emp-dashboard.css">
 </head>
-
 <body>
 
-<!-- ===== NAVBAR ===== -->
-<div class="navbar">
-  <div class="nav-left">
-    <div class="logo">E</div>
-    <span th:text="${employee.fullname}">Employee Name</span>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<main class="container" th:fragment="employeeDashboard">
+
+  <div class="dashboard-header">
+    <div class="welcome-text">
+      <h1 th:text="'Welcome back, ' + ${session.employee.fullname}">
+        Welcome back, Employee
+      </h1>
+      <p>Here is an overview of your leave balances and recent activity.</p>
+    </div>
+
+    <div style="display:flex; gap:15px;">
+        <a href="/employee-edit"
+           class="btn btn-primary"
+           style="background: rgba(255,255,255,0.1);">
+           Edit Profile
+        </a>
+        <a href="/take-leave" class="btn btn-primary">
+           + Apply for Leave
+        </a>
+    </div>
   </div>
 
-  <div class="nav-right">
-    
-    <form action="/logout" method="post">
-      <button class="logout-btn">Logout</button>
-    </form>
+  <div class="stats-grid">
+    <div class="stat-card"
+         th:each="bal : ${balances}"
+         th:classappend="${#strings.toLowerCase(bal.leaveType)}">
+
+      <div class="stat-title"
+           th:text="${bal.leaveType} + ' LEAVE'">
+        LEAVE TYPE
+      </div>
+
+      <div class="stat-value">
+          <span th:text="${bal.remaining}">0</span>
+          <span style="font-size: 1.2rem; color: #64748b; font-weight: 500;">
+            / <span th:text="${bal.totalAllocated}">0</span>
+          </span>
+      </div>
+
+      <div class="stat-subtext">Days Remaining</div>
+    </div>
+
+    <div class="stat-card" th:if="${#lists.isEmpty(balances)}">
+        <div class="stat-title">NO DATA</div>
+        <div class="stat-value">--</div>
+        <div class="stat-subtext">Contact Manager</div>
+    </div>
   </div>
-</div>
 
-<!-- ===== MAIN CONTENT ===== -->
-<div class="container">
-
-  <!-- Action Buttons -->
-  <div class="action-buttons">
-    <a href="/take-leave"><button class="btn">Take Leave</button></a>
-    <a href="/correction-apply"><button class="btn">Correction Apply</button></a>
-    <a href="/resign"><button class="btn">Resign</button></a>
-  </div>
-
-  <!-- Applications Table -->
-  <div class="table-container">
-    <h3>All Applications</h3>
+  <section class="card">
+    <h2>My Leave History</h2>
 
     <table>
       <thead>
         <tr>
-          <th>Application ID</th>
+          <th>Applied On</th>
           <th>Type</th>
+          <th>From Date</th>
+          <th>To Date</th>
+          <th>Days</th>
+          <th>Reason</th>
           <th>Status</th>
-          <th>Approved / Not</th>
         </tr>
       </thead>
 
-	 <tbody>
-	  <tr th:each="app : ${applications}">
-	    <td th:text="${app.id}">101</td>
-	
-	    <td th:text="${app.leaveType}">Leave</td>
-	
-	    <td th:text="${app.status}"
-	        th:classappend="${app.status=='PENDING'} ? 'status-pending' :
-	                        (${app.status=='APPROVED'} ? 'status-approved' : 'status-rejected')">
-	      Pending
-	    </td>
-	
-	    <!-- Approved or Not (derived from status) -->
-	    <td th:text="${app.status=='APPROVED' ? 'Yes' : 'No'}">No</td>
-	  </tr>
-	
-	  <tr th:if="${applications == null || #lists.isEmpty(applications)}">
-	    <td colspan="4">No applications found</td>
-	  </tr>
-	</tbody>
+      <tbody>
+        <tr th:each="app : ${applications}">
+          <td th:text="${app.applyedDate}">01-01-2011</td>
+          <td th:text="${app.leaveType}"
+              style="font-weight: 600; color: #fff;">Sick</td>
+          <td th:text="${app.fromDate}">2026-01-01</td>
+          <td th:text="${app.toDate}">2026-01-03</td>
+          <td th:text="${app.totalDays} + ' Days'">3 Days</td>
+          <td th:text="${app.reason}" style="color: #cbd5e1;">Fever</td>
 
-    </table> 
+          <td>
+            <span class="status-badge"
+                  th:text="${app.status}"
+                  th:classappend="'status-' + ${app.status}">
+              PENDING
+            </span>
+          </td>
+        </tr>
 
-  </div>
+        <tr th:if="${#lists.isEmpty(session.applications)}">
+          <td colspan="7"
+              style="text-align:center; padding:40px; color:#64748b;">
+            You haven't applied for any leave yet.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
 
-</div>
+</main>
+
+<footer>
+  <p>© 2026 Employee Leave Management System</p>
+</footer>
 
 </body>
 </html>

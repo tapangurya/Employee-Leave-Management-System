@@ -1,87 +1,55 @@
-<header class="navbar" th:fragment="navbar">
+<nav class="navbar" th:fragment="navbar">
 
-  <div class="logo-area">
-    <a href="/">
-      <img src="/images/logo.png" alt="Logo" class="logo">
-    </a>
-    <span class="company-name">HyScaler</span>
-  </div>
+	<a
+		th:href="
+    ${session.manager != null} ? @{/manager-dashboard} :
+    (${session.employee != null} ? @{/employee-dashboard} : @{/})
+   "
+		class="logo"> LMS portal </a>
+	<!-- Manager name -->
+	<span class="username" th:if="${session.manager != null}"
+		th:text="${session.manager.fullname + ' (Manager)'}"> Manager Name </span>
+	<span class="username" th:if="${session.employee != null}"
+		th:text="${session.employee.fullname + ' (Employee)'}"> Manager Name </span>
 
-  <ul class="nav-links">
-    <li><a href="/">Home</a></li>
-    <li><a href="/about">About</a></li>
-    <li><a href="/contact">Contact</a></li>
+	<ul class="nav-links">
 
-    <li class="dropdown">
-      <a href="#">Login</a>
-      <div class="dropdown-menu">
-        <a href="/employee-login">Employee Login</a>
-        <a href="/manager-login">Manager Login</a>
-      </div>
-    </li>
+		<!-- NOT LOGGED IN -->
+		<li class="nav-item"
+			th:if="${session.manager == null and session.employee == null}">
+			<span class="nav-link">Login ▾</span>
+			<div class="dropdown-menu">
+				<a th:href="@{/login}">Manager Login</a> <a
+					th:href="@{/employee-login}">Employee Login</a>
+			</div>
+		</li>
 
-    <li class="dropdown">
-      <a href="#">Sign Up</a>
-      <div class="dropdown-menu">
-        <a href="/employee-signup">Employee Sign Up</a>
-        <a href="/manager-signup">Manager Sign Up</a>
-      </div>
-    </li>
-  </ul>
+		<li class="nav-item"
+			th:if="${session.manager == null and session.employee == null}">
+			<a th:href="@{/manager-register}" class="btn-register"> Register
+				Manager </a>
+		</li>
 
-</header>
-	
+		<!-- MANAGER LOGGED IN -->
+		<!-- <li class="nav-item" th:if="${session.manager != null}"><a
+			th:href="@{/manager-profile}" class="btn-primary">Profile</a></li> -->
 
+		<li class="nav-item" th:if="${session.manager != null}"><a
+			th:href="@{/employee/create}" class="btn-primary"> Create
+				Employee </a></li>
 
-<!-- <section id="header" th:fragment="navbar">
-  <header class="navbar">
+		<li class="nav-item" th:if="${session.manager != null}">
+			<form th:action="@{/logout}" method="post">
+				<button type="submit" class="btn-danger">Logout</button>
+			</form>
+		</li>
 
-    Logo
-    <div class="logo-area">
-      <img src="/images/Logo/logo3.png" alt="logo" class="logo">
-      <span class="company-name">StyleTradeMark</span>
-    </div>
+		<!-- EMPLOYEE LOGGED IN -->
+		<li class="nav-item" th:if="${session.employee != null}">
+			<form th:action="@{/logout}" method="post">
+				<button type="submit" class="btn-danger">Logout</button>
+			</form>
+		</li>
 
-    Menu
-    <ul class="nav-links">
-
-      <li><a href="/">Home</a></li>
-      <li><a href="/about">About</a></li>
-      <li><a href="/contact">Contact</a></li>
-
-      Login & Signup (Not Logged In)
-      <li class="dropdown" th:if="${session.customer == null}">
-        <a href="#">Login</a>
-        <div class="dropdown-menu">
-          <a href="/customer-login">Customer Login</a>
-          <a href="/seller-login">Seller Login</a>
-        </div>
-      </li>
-
-      <li class="dropdown" th:if="${session.customer == null}">
-        <a href="#">Sign Up</a>
-        <div class="dropdown-menu">
-          <a href="/customer-signup">Customer Sign Up</a>
-          <a href="/seller-signup">Seller Sign Up</a>
-        </div>
-      </li>
-
-      Profile & Logout (Logged In)
-      <li class="dropdown" th:if="${session.customer != null}">
-        <a href="#">
-          <i class="fa fa-user"></i>
-          <span th:text="${session.customer.name}">Profile</span>
-        </a>
-        <div class="dropdown-menu">
-          <a th:href="'/customer-profile/' + ${session.customer.id}">
-            My Profile
-          </a>
-          <a href="/logout">Logout</a>
-        </div>
-      </li>
-
-    </ul>
-  </header>
-</section>
-
- -->
+	</ul>
+</nav>

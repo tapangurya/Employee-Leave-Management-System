@@ -1,174 +1,170 @@
-@charset "UTF-8";
+/* =========================================
+   COMMON LOGIN STYLES (Manager & Employee)
+   ========================================= */
 
-/* ========== RESET ========== */
+/* 1. TYPOGRAPHY IMPORT */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+/* 2. GLOBAL RESET & BACKGROUND */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
 }
 
-/* ========== BODY ========== */
 body {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+    /* Deep Corporate Navy Background */
+    background: radial-gradient(circle at 10% 20%, rgb(30, 36, 68) 0%, rgb(18, 22, 45) 90%);
+    color: #ffffff;
+    min-height: 100vh;
+    
+    /* Center Content Vertically & Horizontally */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-/* ========== NAVBAR ========== */
-.navbar {
-  width: 100%;
-  position: fixed;          /* 🔥 key fix */
-  top: 0;
-  left: 0;
-  z-index: 1000;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  padding: 12px 30px;
-  background-color: #111;
-}
-.logo-area {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.logo {
-  height: 45px;
-  border-radius: 50%;
-}
-
-.company-name {
-  color: #fff;
-  font-size: 22px;
-  font-weight: bold;
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-}
-
-.nav-links li {
-  position: relative;
-}
-
-.nav-links a {
-  color: #fff;
-  text-decoration: none;
-  padding: 6px 10px;
-}
-
-.nav-links a:hover {
-  color: #f0a500;
-}
-
-/* Dropdown */
-.dropdown-menu {
-  display: none;
-  position: absolute;
-  top: 35px;
-  left: 0;
-  background-color: #222;
-  min-width: 160px;
-  border-radius: 4px;
-  z-index: 100;
-}
-
-.dropdown-menu a {
-  display: block;
-  padding: 10px;
-}
-
-.dropdown:hover .dropdown-menu {
-  display: block;
-}
-
-/* ========== LOGIN PAGE LAYOUT ========== */
+/* 3. LAYOUT WRAPPERS
+   Handles both .page-wrapper (Employee) and standard Body flow (Manager) */
 .page-wrapper {
-  min-height: calc(100vh - 70px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  margin-top: 70px; /* 🔥 prevents overlap */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
-
-/* ========== LOGIN BOX ========== */
+/* 4. GLASSMORPHISM CARD (Shared Class)
+   Targeting both class names you used */
+.login-box, 
 .login-container {
-  width: 100%;
-  max-width: 360px;
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.05); /* Very sheer white */
+    backdrop-filter: blur(20px); /* Heavy blur */
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    
+    width: 90%; /* Responsive width */
+    max-width: 400px;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    margin: 20px; /* spacing on mobile */
 }
 
-/* Heading */
-.login-container h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #333;
+/* 5. TYPOGRAPHY */
+h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #fff;
 }
 
-/* Form fields */
+p {
+    color: #94a3b8; /* Slate grey */
+    margin-bottom: 30px;
+    font-size: 0.95rem;
+}
+
+/* 6. FORM ELEMENTS */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Adds space between inputs automatically */
+}
+
+/* Handles the specific .form-group wrapper in Employee Page */
 .form-group {
-  margin-bottom: 15px;
+    margin-bottom: 0; /* Resetting margin since we use gap in form */
+    text-align: left; /* Align labels to left */
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 14px;
-  color: #555;
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #cbd5e1;
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
-.form-group input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 14px;
+input {
+    width: 100%;
+    padding: 14px 16px;
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.2s ease;
 }
 
-.form-group input:focus {
-  outline: none;
-  border-color: #667eea;
+input:focus {
+    border-color: #6366f1; /* Indigo focus color */
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+    background: rgba(15, 23, 42, 0.9);
 }
 
-/* Button */
+input::placeholder {
+    color: #64748b;
+}
+
+/* 7. BUTTONS */
 button {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 6px;
-  background-color: #667eea;
-  color: #fff;
-  font-size: 15px;
-  cursor: pointer;
-  transition: background 0.3s;
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    
+    background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.3);
 }
 
 button:hover {
-  background-color: #5563c1;
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%);
+    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);
 }
 
-/* Footer */
+/* 8. FOOTER LINKS */
 .footer-text {
-  margin-top: 15px;
-  text-align: center;
-  font-size: 14px;
+    margin-top: 25px;
+    font-size: 0.9rem;
+    color: #94a3b8;
 }
 
 .footer-text a {
-  color: #667eea;
-  text-decoration: none;
+    color: #818cf8;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
 }
 
 .footer-text a:hover {
-  text-decoration: underline;
+    color: #a5b4fc;
+    text-decoration: underline;
+}
+
+/* Back Link */
+.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 25px;
+    text-decoration: none;
+    color: #94a3b8;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.back-link:hover {
+    color: #6366f1;
+    text-decoration: none;
 }

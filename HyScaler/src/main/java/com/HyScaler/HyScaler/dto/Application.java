@@ -13,22 +13,36 @@ public class Application {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String leaveType;      // LEAVE / CORRECTION
-    private String status;    // Initial: PENDING / APPROVED / REJECTED
+    // Example: VACATION / SICK / CASUAL
+    @Column(nullable = false, length = 20)
+    private String leaveType;
 
-    private LocalDate from_date;
-    private LocalDate to_date;
+    // PENDING / APPROVED / REJECTED
+    @Column(nullable = false, length = 20)
+    private String status;
 
+    @Column(nullable = false)
+    private LocalDate fromDate;
+
+    @Column(nullable = false)
+    private LocalDate toDate;
+    
+    @Column(nullable = false)
+    private LocalDate applyedDate;
+    
     @Column(length = 1000)
     private String reason;
 
-    /*  MANY APPLICATIONS → ONE EMPLOYEE  */
-    @ManyToOne
+    @Column(nullable = false)
+    private int totalDays;
+
+    /* MANY APPLICATIONS → ONE EMPLOYEE */
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 
-    /* ===== MANY APPLICATIONS → ONE MANAGER ===== */
-    @ManyToOne
+    /* MANY APPLICATIONS → ONE MANAGER */
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manager_id")
     private Manager manager;
 }

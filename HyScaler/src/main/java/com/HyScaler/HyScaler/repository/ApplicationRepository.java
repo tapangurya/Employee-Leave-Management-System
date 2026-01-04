@@ -11,5 +11,7 @@ import com.HyScaler.HyScaler.dto.Manager;
 public interface ApplicationRepository extends JpaRepository<Application, Integer> {
 	List<Application> findByEmployee(Employee employee);
 	List<Application> findByManager(Manager manager);
+	List<Application> findByStatus(String status);
+    List<Application> findByManagerAndStatus(Manager manager, String status);
 
 }

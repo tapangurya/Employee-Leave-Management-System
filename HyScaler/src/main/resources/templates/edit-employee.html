@@ -4,87 +4,36 @@
   <meta charset="UTF-8">
   <title>Edit Employee</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f9;
-      padding: 30px;
-    }
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    .form-container {
-      max-width: 600px;
-      background: #fff;
-      padding: 25px;
-      margin: auto;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #1f2937;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      font-size: 14px;
-    }
-
-    .gender-group {
-      display: flex;
-      gap: 15px;
-    }
-
-    .gender-group label {
-      font-weight: normal;
-    }
-
-    .btn {
-      width: 100%;
-      padding: 12px;
-      background: #2563eb;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-
-    .btn:hover {
-      background: #1d4ed8;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/create-edit-employee.css">
 </head>
 
 <body>
+
+<div th:replace="fragments/navbar :: navbar"></div>
 
 <div class="form-container">
   <h2>Edit Employee</h2>
 
   <form action="/edit-employee" method="post">
-	
-    <!-- Hidden Employee ID -->
+
+    <!-- Hidden ID -->
     <input type="hidden" name="id" th:value="${employee.id}">
 
     <!-- Full Name -->
-    <div class="form-group">
+    <div class="form-group full-width">
       <label>Full Name</label>
-      <input type="text" name="fullname" th:value="${employee.fullname}" required>
+      <input type="text" name="fullname"
+             th:value="${employee.fullname}" required>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" name="email"
+             th:value="${employee.email}" required>
     </div>
 
     <!-- Phone -->
@@ -94,37 +43,18 @@
              th:value="${employee.phone}" required>
     </div>
 
-    <!-- Date of Birth -->
+    <!-- DOB -->
     <div class="form-group">
       <label>Date of Birth</label>
-      <input type="date" name="dob" th:value="${employee.dob}" required>
-    </div>
-
-    <!-- Email -->
-    <div class="form-group">
-      <label>Email</label>
-      <input type="email" name="email" th:value="${employee.email}" required>
-    </div>
-
-    <!-- PAN Number -->
-    <div class="form-group">
-      <label>PAN Number</label>
-      <input type="text" name="panNumber" maxlength="10"
-             th:value="${employee.panNumber}" required>
-    </div>
-
-    <!-- Aadhaar Number -->
-    <div class="form-group">
-      <label>Aadhaar Number</label>
-      <input type="text" name="aadhaarNumber" pattern="[0-9]{12}"
-             th:value="${employee.aadhaarNumber}" required>
+      <input type="date" name="dob"
+             th:value="${employee.dob}" required>
     </div>
 
     <!-- Designation -->
     <div class="form-group">
       <label>Designation</label>
       <select name="designation" required>
-        <option value="">-- Select Designation --</option>
+        <option value="" disabled>Select Role</option>
         <option th:selected="${employee.designation=='Software Engineer'}">Software Engineer</option>
         <option th:selected="${employee.designation=='Senior Developer'}">Senior Developer</option>
         <option th:selected="${employee.designation=='HR Executive'}">HR Executive</option>
@@ -138,34 +68,55 @@
       </select>
     </div>
 
-    <!-- Gender -->
+    <!-- PAN -->
     <div class="form-group">
+      <label>PAN Number</label>
+      <input type="text" name="panNumber" maxlength="10"
+             th:value="${employee.panNumber}"
+             style="text-transform: uppercase;" required>
+    </div>
+
+    <!-- Aadhaar -->
+    <div class="form-group">
+      <label>Aadhaar Number</label>
+      <input type="text" name="aadhaarNumber" pattern="[0-9]{12}"
+             th:value="${employee.aadhaarNumber}" required>
+    </div>
+
+    <!-- Gender -->
+    <div class="form-group full-width">
       <label>Gender</label>
-      <div class="gender-group">
-        <label>
+      <div class="gender-options">
+        <label class="radio-label">
           <input type="radio" name="gender" value="Male"
                  th:checked="${employee.gender=='Male'}"> Male
         </label>
-        <label>
+        <label class="radio-label">
           <input type="radio" name="gender" value="Female"
                  th:checked="${employee.gender=='Female'}"> Female
         </label>
-        <label>
+        <label class="radio-label">
           <input type="radio" name="gender" value="Other"
                  th:checked="${employee.gender=='Other'}"> Other
         </label>
       </div>
     </div>
-    <div class="form-group">
+
+    <!-- Password -->
+    <div class="form-group full-width">
       <label>Password</label>
-      <input type="password" name="password"  th:value="${employee.password}">
+      <input type="password" name="password"
+             th:value="${employee.password}">
     </div>
-    
 
     <!-- Submit -->
-    <button type="submit" class="btn">Update Employee</button>
+    <button type="submit" class="btn-submit">
+      Update Employee
+    </button>
 
   </form>
+  <a href="/manager-dashboard" class="back-link">← Cancel & Return to Dashboard</a>
+  
 </div>
 
 </body>

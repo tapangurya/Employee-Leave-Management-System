@@ -45,6 +45,8 @@ public class MyService {
 	    }
 
 	    // Login success
+	    
+	    session.setAttribute("isLoggedIn", true);
 	    session.setAttribute("manager", manager);
 	    session.setAttribute("success", "Login successful");
 

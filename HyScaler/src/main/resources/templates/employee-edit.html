@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Profile</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/create-edit-employee.css">
+
+  <style>
+    /* Specific tweak for Read-Only fields in the Glass Theme */
+    input[readonly], .readonly {
+        background: rgba(0, 0, 0, 0.3) !important; /* Darker background */
+        color: #94a3b8 !important; /* Dimmer text */
+        border-color: rgba(255, 255, 255, 0.05) !important;
+        cursor: not-allowed;
+    }
+    
+    input[readonly]:focus {
+        box-shadow: none !important;
+        border-color: rgba(255, 255, 255, 0.05) !important;
+    }
+  </style>
+</head>
+
+<body>
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="form-container">
+  <h2>Update My Profile</h2>
+
+  <form action="/employee-edit" method="post">
+    
+    <div class="form-group">
+      <label>Employee ID</label>
+      <input type="text" name="id" th:value="${employee.id}" readonly>
+    </div>
+
+    <div class="form-group">
+      <label>Designation</label>
+      <input type="text" th:value="${employee.designation}" readonly>
+      <input type="hidden" name="designation" th:value="${employee.designation}">
+    </div>
+
+    <div class="form-group full-width">
+      <label>Full Name</label>
+      <input type="text" name="fullname" th:value="${employee.fullname}" required>
+    </div>
+
+    <div class="form-group">
+      <label>Email Address</label>
+      <input type="email" name="email" th:value="${employee.email}" required>
+    </div>
+
+    <div class="form-group">
+      <label>Phone Number</label>
+      <input type="tel" name="phone" pattern="[0-9]{10}" th:value="${employee.phone}" required>
+    </div>
+
+    <div class="form-group">
+      <label>Date of Birth</label>
+      <input type="date" name="dob" th:value="${employee.dob}" required>
+    </div>
+
+    <div class="form-group">
+      <label>Gender</label>
+      <input type="text" th:value="${employee.gender}" readonly>
+      <input type="hidden" name="gender" th:value="${employee.gender}">
+    </div>
+
+    <div class="form-group">
+      <label>PAN Number</label>
+      <input type="text" th:value="${employee.panNumber}" readonly>
+      <input type="hidden" name="panNumber" th:value="${employee.panNumber}">
+    </div>
+
+    <div class="form-group">
+      <label>Aadhaar Number</label>
+      <input type="text" th:value="${employee.aadhaarNumber}" readonly>
+      <input type="hidden" name="aadhaarNumber" th:value="${employee.aadhaarNumber}">
+    </div>
+
+    <button type="submit" class="btn-submit">Update Profile</button>
+
+  </form>
+  <a href="/employee-dashboard" class="back-link">← Cancel & Return to Dashboard</a>
+</div>
+
+</body>
+</html>
