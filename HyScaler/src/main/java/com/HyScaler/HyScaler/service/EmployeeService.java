@@ -2,6 +2,7 @@ package com.HyScaler.HyScaler.service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -187,6 +188,30 @@ public class EmployeeService {
 	    lb.setUsed(0);
 	    lb.setRemaining(quota);
 	    leaveBalanceRepository.save(lb);
+	}
+	public String employeeLeaveCalendar(HttpSession session, ModelMap map) {
+	    
+	    // 1. Get the logged-in Employee
+	    Employee employee = (Employee) session.getAttribute("employee");
+	    if (employee == null) {
+	        return "redirect:/login";
+	    }
+
+	    // 2. Get the Employee's Manager (to find teammates)
+	    // Assuming your Employee entity has a 'getManager()' method
+	    Manager teamManager = employee.getManager();
+	    
+	    List<Application> teamLeaves = new ArrayList<>();
+	    
+	    if (teamManager != null) {
+	        // 3. Fetch all APPROVED leaves for this Manager (Team Leaves)
+	        teamLeaves = appliRepository.findByManagerAndStatus(teamManager, "APPROVED");
+	    }
+
+	    // 4. Add to Model
+	    map.put("leaves", teamLeaves);
+
+	    return "employee-leave-calendar";
 	}
  
 }

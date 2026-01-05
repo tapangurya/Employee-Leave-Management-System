@@ -17,23 +17,32 @@
 
   <div class="dashboard-header">
     <div class="welcome-text">
-      <h1 th:text="'Welcome back, ' + ${session.employee.fullname}">
-        Welcome back, Employee
-      </h1>
-      <p>Here is an overview of your leave balances and recent activity.</p>
+        <h1 th:text="'Welcome back, ' + ${session.employee.fullname}">
+            Welcome back, Employee
+        </h1>
+        <p>Here is an overview of your leave balances and recent activity.</p>
     </div>
 
-    <div style="display:flex; gap:15px;">
+    <div style="display:flex; gap:15px; align-items: center;">
+        
         <a href="/employee-edit"
            class="btn btn-primary"
-           style="background: rgba(255,255,255,0.1);">
+           style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); box-shadow: none;">
            Edit Profile
         </a>
+
+        <a href="/employee/leave-calendar" class="btn-calendar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+            </svg>
+            Team Calendar
+        </a>
+
         <a href="/take-leave" class="btn btn-primary">
            + Apply for Leave
         </a>
     </div>
-  </div>
+</div>
 
   <div class="stats-grid">
     <div class="stat-card"
@@ -75,6 +84,7 @@
           <th>Days</th>
           <th>Reason</th>
           <th>Status</th>
+          <th>Commenct</th>
         </tr>
       </thead>
 
@@ -95,6 +105,7 @@
               PENDING
             </span>
           </td>
+          <td th:text="${app.comment}" style="color: #cbd5e1;">Ok</td>
         </tr>
 
         <tr th:if="${#lists.isEmpty(session.applications)}">

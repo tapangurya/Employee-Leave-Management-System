@@ -13,5 +13,6 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
 	List<Application> findByManager(Manager manager);
 	List<Application> findByStatus(String status);
     List<Application> findByManagerAndStatus(Manager manager, String status);
+    
 
 }

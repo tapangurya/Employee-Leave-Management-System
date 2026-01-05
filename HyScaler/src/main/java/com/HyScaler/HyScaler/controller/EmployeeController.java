@@ -54,7 +54,10 @@ public class EmployeeController {
 	public String postEditBasicDetails(@ModelAttribute Employee employee, HttpSession session,ModelMap map) {
 		return service.postEditBasicDetails(employee,session,map);
 	}
-	
+	@GetMapping("/employee/leave-calendar")
+	public String employeeLeaveCalendar(HttpSession session, ModelMap map) {
+		return service.employeeLeaveCalendar(session,map);
+	}
 	
 	
   

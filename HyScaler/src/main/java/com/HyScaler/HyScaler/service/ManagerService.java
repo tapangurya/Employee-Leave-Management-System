@@ -146,7 +146,12 @@ public class ManagerService {
 		}
 	}
 
-	public String applicationApproved(int id, HttpSession session, ModelMap map) {
+	
+
+	public String showApprovePage(
+	        int id,
+	        ModelMap map,
+	        HttpSession session) {
 
 	    if (session.getAttribute("manager") == null) {
 	        session.setAttribute("fail", "Please login first");
@@ -155,10 +160,36 @@ public class ManagerService {
 
 	    Application application = appRepository.findById(id).orElse(null);
 	    if (application == null) {
-	        session.setAttribute("fail", "Application Not found");
+	        session.setAttribute("fail", "Application not found");
 	        return "redirect:/manager-dashboard";
 	    }
 
+	    session.setAttribute("application", application);
+	    return "approve-comment";
+	}
+
+	
+	public String applicationApproved(int id, HttpSession session, ModelMap map,String comment) {
+		
+		System.out.println("ID............... = " + id);
+	    System.out.println("COMMENT..................... = " + comment);
+
+	    if (session.getAttribute("manager") == null) {
+	        session.setAttribute("fail", "Please login first");
+	        return "redirect:/login";
+	    }
+
+	    Application application = appRepository.findById(id).orElse(null);
+	    if (application == null) {
+	        session.setAttribute("fail", "Application not found");
+	        return "redirect:/manager-dashboard";
+	    }
+
+	    if ("APPROVED".equals(application.getStatus())) {
+	        session.setAttribute("fail", "Application already approved");
+	        return "redirect:/manager-dashboard";
+	    }
+	    
 	    LeaveBalance balance = leaveBalanceRepository
 	            .findByEmployeeAndLeaveType(
 	                application.getEmployee(),
@@ -179,6 +210,7 @@ public class ManagerService {
 	    balance.setUsed(balance.getUsed() + application.getTotalDays());
 
 	    // ✅ UPDATE STATUS
+	    application.setComment(comment);
 	    application.setStatus("APPROVED");
 
 	    leaveBalanceRepository.save(balance);
@@ -186,6 +218,22 @@ public class ManagerService {
 
 	    session.setAttribute("pass", "Leave approved");
 	    return "redirect:/manager-dashboard";
+	}
+// ---------------------- leave calendar ------------------------------------------ //
+	public String managerLeaveCalendar(HttpSession session, ModelMap map) {
+
+	    Manager manager = (Manager) session.getAttribute("manager");
+	    if (manager == null) {
+	        return "redirect:/login";
+	    }
+
+	    // Fetch approved leaves
+	    List<Application> approvedLeaves = appRepository.findByManagerAndStatus(manager, "APPROVED");
+
+	    // Add to ModelMap so it is available as ${leaves} in HTML
+	    map.put("leaves", approvedLeaves);
+
+	    return "manager-leave-calendar";
 	}
 
 

@@ -20,6 +20,8 @@ public class Application {
     // PENDING / APPROVED / REJECTED
     @Column(nullable = false, length = 20)
     private String status;
+    
+    private String comment;
 
     @Column(nullable = false)
     private LocalDate fromDate;

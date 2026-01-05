@@ -32,7 +32,27 @@ body {
     flex-direction: column;
     gap: 40px;
 }
+/*==================Leave Calendar================*/
+.btn-calendar {
+    display: inline-block;
+    padding: 10px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Purple-Blue Gradient */
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 50px; /* Rounded pill shape like your other buttons */
+    box-shadow: 0 4px 15px rgba(118, 75, 162, 0.4); /* Glowing shadow effect */
+    transition: all 0.3s ease;
+    border: none;
+    letter-spacing: 0.5px;
+}
 
+.btn-calendar:hover {
+    transform: translateY(-2px); /* Slight lift on hover */
+    box-shadow: 0 6px 20px rgba(118, 75, 162, 0.6);
+    color: #ffffff; /* Ensure text stays white */
+}
 /* ================= CARDS (GLASS SECTIONS) ================= */
 .card {
     background: rgba(255, 255, 255, 0.03);

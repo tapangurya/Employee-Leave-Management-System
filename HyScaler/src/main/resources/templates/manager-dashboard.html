@@ -15,9 +15,11 @@
 <body>
 
 	<div th:replace="fragments/navbar :: navbar"></div>
+	<a href="/manager/leave-calendar" class="btn-calendar"> View Leave
+		Calendar </a>
 
-	<main class="container"
-		th:fragment="managerDashboard">
+
+	<main class="container" th:fragment="managerDashboard">
 
 		<!-- ================= ALL EMPLOYEES ================= -->
 		<section class="card">
