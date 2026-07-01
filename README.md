@@ -116,7 +116,7 @@ The Manager handles both employee management and leave approval, making the syst
 
 🚀 How to Run the Project
 🔽 Clone Repository
-git clone https://github.com/your-username/leave-management-system.git
+git clone https://github.com/tapangurya/leave-management-system.git
 
 ⚙ Configure application.properties
           spring.datasource.url=jdbc:mysql://localhost:3306/lms_db
